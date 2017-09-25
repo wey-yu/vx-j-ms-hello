@@ -1,7 +1,6 @@
 package org.typeunsafe;
 
 
-import io.vertx.circuitbreaker.CircuitBreaker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.http.HttpServer;
@@ -10,11 +9,9 @@ import io.vertx.core.json.JsonObject;
 
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.BodyHandler;
 
-import io.vertx.servicediscovery.ServiceReference;
 import io.vertx.servicediscovery.rest.ServiceDiscoveryRestEndpoint;
 import io.vertx.servicediscovery.types.HttpEndpoint;
 import io.vertx.servicediscovery.ServiceDiscovery;
@@ -23,11 +20,8 @@ import io.vertx.servicediscovery.Record;
 import me.atrox.haikunator.Haikunator;
 import me.atrox.haikunator.HaikunatorBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 import java.util.Optional;
-import java.util.function.*;
 
 public class BaseStar extends AbstractVerticle {
   
@@ -42,7 +36,6 @@ public class BaseStar extends AbstractVerticle {
         System.out.println("👋 bye bye " + record.getRegistration());
       } else {
         System.out.println("😡 Not able to unpublish the microservice: " + asyncResult.cause().getMessage());
-        //asyncResult.cause().printStackTrace();
       }
       stopFuture.complete();
     });
@@ -121,10 +114,7 @@ public class BaseStar extends AbstractVerticle {
 
     System.out.println("🤖 " + record.getName() + " is starting... ");
 
-
-    /* === Define routes and start the server ==
-
-    */
+    /* === Define routes and start the server === */
     Router router = Router.router(vertx);
     router.route().handler(BodyHandler.create());
 
